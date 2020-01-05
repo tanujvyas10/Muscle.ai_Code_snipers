@@ -29,11 +29,11 @@ router.get('/signout', (req, res) => {
 })
 
 /* GET home page. */
-router.get('/exercise1', function(req, res, next) {
+router.get('/exercise1', checkLogin, function(req, res, next) {
   res.render('index');
 });
 
-router.get("/breathing",(req,res,next)=>{
+router.get("/breathing", checkLogin, (req,res,next)=>{
   res.render("breathing")
 })
 
@@ -41,7 +41,7 @@ router.get("/menu", checkLogin, (req, res, next)=>{
   res.render('menu')
 })
 
-router.get("/exercise2",(req,res,next)=>{
+router.get("/exercise2", checkLogin, (req,res,next)=>{
   res.render("sideRaises")
 })
 
@@ -71,7 +71,7 @@ router.post('/signin', passport.authenticate('local', {
 }))
 
 
-router.get("/progress",(req,res,next)=>{
+router.get("/progress", checkLogin, (req,res,next)=>{
   connectdb('hackTIET')
   .then(db => db.collection('users').findOne({ username : req.user[0].username}))
   .then((data) => {
@@ -85,7 +85,7 @@ router.get("/progress",(req,res,next)=>{
   })
   
 })
-router.post("/performance",(req,res,next)=>{
+router.post("/performance", checkLogin, (req,res,next)=>{
   
   var calories=0;
   var performance=req.body.performance
